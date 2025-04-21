@@ -1,0 +1,1 @@
+<center><br><br><br><p><?php echo "Hacking attack detected from IP Address: ". $_SERVER['REMOTE_ADDR']; ?></p><p><?php echo "Email has been sent to administrator"; ?></p></center>

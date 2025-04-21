@@ -367,3 +367,35 @@ System.InvalidOperationException: The view 'Index' was not found. The following 
 2025-04-21 17:47:55.288 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/js/site.js, Response status code: 404
 2025-04-21 17:47:59.578 +05:30 [INF] Application is shutting down...
 2025-04-21 17:47:59.595 +05:30 [INF] DLR processor stopping due to cancellation
+2025-04-21 18:05:04.240 +05:30 [INF] User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-04-21 18:05:04.360 +05:30 [INF] Starting DLR processor from standard input
+2025-04-21 18:05:04.423 +05:30 [INF] Now listening on: http://localhost:5195
+2025-04-21 18:05:04.426 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-21 18:05:04.430 +05:30 [INF] Hosting environment: Development
+2025-04-21 18:05:04.432 +05:30 [INF] Content root path: C:\abhi\newsetup\Immense\processJobAndSmsApi_last
+2025-04-21 18:05:07.201 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/ - null null
+2025-04-21 18:05:07.268 +05:30 [WRN] Failed to determine the https port for redirect.
+2025-04-21 18:05:07.316 +05:30 [INF] Executing endpoint 'processJobAndSmsApi.Controllers.HomeController.Index (processJobAndSmsApi)'
+2025-04-21 18:05:07.363 +05:30 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller processJobAndSmsApi.Controllers.HomeController (processJobAndSmsApi).
+2025-04-21 18:05:12.680 +05:30 [INF] Executing ViewResult, running view Index.
+2025-04-21 18:05:14.105 +05:30 [INF] Executed ViewResult - view Index executed in 6701.032ms.
+2025-04-21 18:05:14.128 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/css/site.css - null null
+2025-04-21 18:05:14.128 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2025-04-21 18:05:14.128 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/lib/jquery/dist/jquery.min.js - null null
+2025-04-21 18:05:14.129 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/lib/bootstrap/dist/css/bootstrap.min.css - null null
+2025-04-21 18:05:14.131 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5195/js/site.js - null null
+2025-04-21 18:05:14.150 +05:30 [INF] Executed action processJobAndSmsApi.Controllers.HomeController.Index (processJobAndSmsApi) in 6776.9787ms
+2025-04-21 18:05:14.165 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/css/site.css - 404 0 null 36.6017ms
+2025-04-21 18:05:14.171 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/lib/jquery/dist/jquery.min.js - 404 0 null 42.8496ms
+2025-04-21 18:05:14.171 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 404 0 null 42.8493ms
+2025-04-21 18:05:14.177 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/lib/bootstrap/dist/css/bootstrap.min.css - 404 0 null 48.4785ms
+2025-04-21 18:05:14.189 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/js/site.js - 404 0 null 58.6028ms
+2025-04-21 18:05:14.191 +05:30 [INF] Executed endpoint 'processJobAndSmsApi.Controllers.HomeController.Index (processJobAndSmsApi)'
+2025-04-21 18:05:14.207 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/css/site.css, Response status code: 404
+2025-04-21 18:05:14.209 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/lib/jquery/dist/jquery.min.js, Response status code: 404
+2025-04-21 18:05:14.237 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/lib/bootstrap/dist/js/bootstrap.bundle.min.js, Response status code: 404
+2025-04-21 18:05:14.248 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/lib/bootstrap/dist/css/bootstrap.min.css, Response status code: 404
+2025-04-21 18:05:14.259 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5195/js/site.js, Response status code: 404
+2025-04-21 18:05:14.268 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5195/ - 200 null text/html; charset=utf-8 7070.2762ms
+2025-04-21 18:05:27.156 +05:30 [INF] Application is shutting down...
+2025-04-21 18:05:27.177 +05:30 [INF] DLR processor stopping due to cancellation
