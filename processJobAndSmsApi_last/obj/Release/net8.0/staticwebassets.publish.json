@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "UXej0G6OxueOWFtlVh+Y+l4+MtX6HNSw3gT7C30yCys=",
+  "Source": "processJobAndSmsApi",
+  "BasePath": "_content/processJobAndSmsApi",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

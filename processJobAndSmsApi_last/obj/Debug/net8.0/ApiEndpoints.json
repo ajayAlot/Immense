@@ -1,0 +1,162 @@
+[
+  {
+    "ContainingType": "processJobAndSmsApi.Controllers.ProcessJobAndSmsApiController",
+    "Method": "ProcessJobAndSmsApi",
+    "RelativePath": "api/ProcessJobAndSmsApi/process",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "JobId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FilePath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UsersGroupIds",
+        "Type": "System.Int32[]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SMSCount",
+        "Type": "System.Int32[]",
+        "IsRequired": false
+      },
+      {
+        "Name": "RouteTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SmsLimit",
+        "Type": "System.Int32[]",
+        "IsRequired": false
+      },
+      {
+        "Name": "TotalBalanceSMS",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TotalBalanceSMSAdminOverselling",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OverSellingUsersCategoryName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OverSellingActivated",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OverSellingUsersID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Route",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cutting",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CutOffPercentage",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "CuttingMinValue",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserCategory",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserFullName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Coding",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Peid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Sender",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MsgStat",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Mclass",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "SmsMessage",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CutoffStatusName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Program\u002B\u003C\u003Ec",
+    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_1",
+    "RelativePath": "weatherforecast",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "WeatherForecast[]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

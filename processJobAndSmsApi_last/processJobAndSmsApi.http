@@ -1,0 +1,6 @@
+@processJobAndSmsApi_HostAddress = http://localhost:5195
+
+GET {{processJobAndSmsApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

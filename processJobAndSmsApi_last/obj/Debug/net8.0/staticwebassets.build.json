@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "dJ68dD5ChBEzNCIySJPm0wl4Z1T1q1p8NTHEqJwfg9w=",
+  "Source": "processJobAndSmsApi",
+  "BasePath": "_content/processJobAndSmsApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
