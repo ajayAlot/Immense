@@ -1,12 +1,20 @@
 {
   "Version": 1,
-  "Hash": "dJ68dD5ChBEzNCIySJPm0wl4Z1T1q1p8NTHEqJwfg9w=",
+  "Hash": "VmCxd06qyU5otxVTk2VtI18NJ6+vjQ+li83VnkzzTe0=",
   "Source": "processJobAndSmsApi",
   "BasePath": "_content/processJobAndSmsApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "processJobAndSmsApi\\wwwroot",
+      "Source": "processJobAndSmsApi",
+      "ContentRoot": "C:\\abhi\\newsetup\\Immense\\processJobAndSmsApi_last\\wwwroot\\",
+      "BasePath": "_content/processJobAndSmsApi",
+      "Pattern": "**"
+    }
+  ],
   "Assets": [],
   "Endpoints": []
 }

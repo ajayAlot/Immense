@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("processJobAndSmsApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a738b0d26b9cb2ca09e84e182ec6767e149de794")]
 [assembly: System.Reflection.AssemblyProductAttribute("processJobAndSmsApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("processJobAndSmsApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
