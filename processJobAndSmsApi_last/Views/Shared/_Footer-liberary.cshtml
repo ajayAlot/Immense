@@ -1,0 +1,317 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var PHPFileName = System.IO.Path.GetFileName(HttpContextAccessor.HttpContext.Request.Path);
+    HttpContextAccessor.HttpContext.Session.Remove("action");
+    HttpContextAccessor.HttpContext.Session.Remove("job_message");
+}
+
+<script type="text/javascript" src="~/js-core/jquery-ui-core.js"></script>
+<script type="text/javascript" src="~/js-core/jquery-ui-widget.js"></script>
+<script type="text/javascript" src="~/js-core/jquery-ui-mouse.js"></script>
+<script type="text/javascript" src="~/js-core/jquery-ui-position.js"></script>
+<!--<script type="text/javascript" src="~/js-core/transition.js"></script>-->
+<script type="text/javascript" src="~/js-core/modernizr.js"></script>
+<script type="text/javascript" src="~/js-core/jquery-cookie.js"></script>
+<script type="text/javascript">$(window).load(function(){setTimeout(function() {$('#loading').fadeOut( 10, "linear" );}, 10);});</script>
+
+<!-- Uniform -->
+<script type="text/javascript" src="~/widgets/uniform/uniform.js"></script>
+<script type="text/javascript" src="~/widgets/uniform/uniform-demo.js"></script>
+<!-- Boostrap Tabs -->
+<script type="text/javascript" src="~/widgets/tabs/tabs.js"></script>
+<!-- Chosen -->
+<script type="text/javascript" src="~/widgets/chosen/chosen.js"></script>
+<script type="text/javascript" src="~/widgets/chosen/chosen-demo.js"></script>
+<!-- Input switch -->
+<script type="text/javascript" src="~/widgets/input-switch/inputswitch.js"></script>
+<script type="text/javascript">$(function() { "use strict"; $('.input-switch').bootstrapSwitch(); });</script>
+<!-- Textarea -->
+<script type="text/javascript" src="~/widgets/textarea/textarea.js"></script>
+<script type="text/javascript">$(function() { "use strict"; $('.textarea-autosize').autosize(); });</script>
+<!-- Sparklines charts -->
+<script type="text/javascript" src="~/widgets/charts/sparklines/sparklines.js"></script>
+<script type="text/javascript" src="~/widgets/charts/sparklines/sparklines-demo.js"></script>
+<script type="text/javascript" src="~/widgets/charts/piegage/piegage.js"></script>
+<script type="text/javascript" src="~/widgets/charts/piegage/piegage-demo.js"></script>
+<script type="text/javascript" src="~/widgets/parsley/parsley.js"></script>
+<script type="text/javascript" src="~/widgets/datatable/datatable.js"></script>
+<script type="text/javascript" src="~/widgets/datatable/datatable-bootstrap.js"></script>
+<script type="text/javascript" src="~/widgets/datatable/datatable-tabletools.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {$('#datatable-example').dataTable();});
+    $(document).ready(function() {
+        var table = $('#datatable-hide-columns').DataTable( {
+            "scrollY": "300px",
+            "paging": false
+        } );
+        $('#datatable-hide-columns_filter').hide();
+        $('a.toggle-vis').on( 'click', function (e) {
+            e.preventDefault();
+            var column = table.column( $(this).attr('data-column') );
+            column.visible( ! column.visible() );
+        } );
+    } );
+    $(document).ready(function() {
+        var table = $('#datatable-row-highlight').DataTable();
+        $('#datatable-row-highlight tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('tr-selected');
+        } );
+    });
+    $(document).ready(function() {$('.dataTables_filter input').attr("placeholder", "Search...");});	
+	$(document).ready(function() {
+        var table = $('#datatable-row-highlight-2').DataTable();
+        $('#datatable-row-highlight tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('tr-selected');
+        } );
+    });
+	
+	$(document).ready(function() {
+        var table = $('#datatable-row-highlight-3').DataTable();
+        $('#datatable-row-highlight tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('tr-selected');
+        } );
+    });
+	
+	$(document).ready(function() {
+        var table = $('#datatable-row-highlight-4').DataTable();
+        $('#datatable-row-highlight tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('tr-selected');
+        } );
+    });
+	
+	$(document).ready(function() {
+        var table = $('#datatable-row-highlight-5').DataTable();
+        $('#datatable-row-highlight tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('tr-selected');
+        } );
+    });
+	
+	$(document).ready(function() {var table = $('#datatable-row-5').DataTable();});
+</script>
+
+<script type="text/javascript" src="~/sweet-alerts/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/sweet-alerts/sweetalert.css">
+
+<!-- jQueryUI Tabs -->
+<script type="text/javascript" src="~/widgets/tabs-ui/tabs.js"></script>
+<script type="text/javascript">
+    $(function() { "use strict";$(".tabs").tabs();});
+    $(function() { "use strict";$(".tabs-hover").tabs({event: "mouseover"});});
+</script>
+
+<script type="text/javascript" src="~/widgets/tabs/tabs.js"></script>
+<script type="text/javascript" src="~/widgets/tabs/tabs-responsive.js"></script>
+<script type="text/javascript">$(function() { "use strict";$('.nav-responsive').tabdrop();});</script>
+<script type="text/javascript" src="~/widgets/summernote-wysiwyg/summernote-wysiwyg.js"></script>
+<script type="text/javascript">
+$(function() { "use strict";
+	$('.wysiwyg-editor').summernote({
+		height: 300,
+		minHeight: null,
+		maxHeight: null,
+		focus: true,
+		toolbar: [
+			['style', ['style']],
+			['font', ['bold', 'italic', 'underline', 'clear']],
+			['fontname', ['fontname']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['height', ['height']],
+			['table', ['table']],
+			['insert', ['hr']]
+		  ]
+	});	
+});
+</script>
+
+<script type="text/javascript" src="~/widgets/datepicker/datepicker.js"></script>
+<script type="text/javascript">
+    $(function() { "use strict";
+		$('.bootstrap-datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+			minDate:new Date(),
+			autoclose: true
+        });
+    });
+	
+	$(function() { "use strict";
+		$('.bootstrap-datepicker2').datepicker({
+            format: 'dd/mm/yyyy',
+			maxDate:new Date(),
+			autoclose: true
+        });
+    });
+</script>
+<script type="text/javascript">
+	var currentTime = new Date() 
+	var minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), +2);
+	var maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() +2, +0);
+    $(function() { "use strict";
+		$('.schedule-datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+			minDate: new Date(),
+			maxDate: maxDate,
+			autoclose: true
+        });
+    });
+</script>
+<!-- jQueryUI Datepicker -->
+<script type="text/javascript" src="~/widgets/datepicker-ui/datepicker.js"></script>
+<script type="text/javascript" src="~/widgets/datepicker-ui/datepicker-demo.js"></script>
+<!-- Bootstrap Daterangepicker -->
+<script type="text/javascript" src="~/widgets/daterangepicker/moment.js"></script>
+<script type="text/javascript" src="~/widgets/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="~/widgets/daterangepicker/daterangepicker-demo.js?_=1.0.2"></script>
+<!-- Bootstrap Timepicker -->
+<script type="text/javascript" src="~/widgets/timepicker/timepicker.js"></script>
+<script type="text/javascript">
+$(function() {
+  !(function(){
+    var tp = $('[name=schedule_time]').timepicker({'minuteStep':1});
+    tp.on('focus', function(e){
+      tp.timepicker('showWidget');
+    });
+  })();
+  $('.timepicker-example').timepicker();
+});
+</script>
+<script type="text/javascript" src="~/widgets/wow/wow.js"></script>
+<script type="text/javascript">wow = new WOW({animateClass: 'animated',offset: 100});wow.init();</script>
+
+<script type="text/javascript" src="~/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="~/bootstrap/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="~/widgets/progressbar/progressbar.js"></script>
+<script type="text/javascript" src="~/widgets/superclick/superclick.js"></script>
+<script type="text/javascript" src="~/widgets/input-switch/inputswitch-alt.js"></script>
+<script type="text/javascript" src="~/widgets/slimscroll/slimscroll.js"></script>
+<script type="text/javascript" src="~/widgets/slidebars/slidebars.js"></script>
+<script type="text/javascript" src="~/widgets/slidebars/slidebars-demo.js"></script>
+<script type="text/javascript" src="~/widgets/charts/piegage/piegage.js"></script>
+<script type="text/javascript" src="~/widgets/charts/piegage/piegage-demo.js"></script>
+<script type="text/javascript" src="~/widgets/content-box/contentbox.js"></script>
+<script type="text/javascript" src="~/widgets/overlay/overlay.js"></script>
+<script type="text/javascript" src="~/js-init/widgets-init.js"></script>
+<script type="text/javascript" src="~/themes/admin/layout.js"></script>
+<script type="text/javascript" src="~/widgets/theme-switcher/themeswitcher.js"></script>
+<script type="text/javascript" src="~/js-core/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js-core/jquery.validate.min.js?v=@DateTime.Now.Ticks"></script>
+<script type="text/javascript" src="~/js-core/jqueryc.min.js?v=@DateTime.Now.Ticks"></script>
+
+<script type="text/javascript" src="~/widgets/multi-select/multiselect.js"></script>
+<script type="text/javascript">$(function() { "use strict"; $(".multi-select").multiSelect(); $(".ms-container").append('<i class="glyph-icon icon-exchange"></i>');});</script>
+
+@if (ViewData["LoggedUserCategory"] != null && ViewData["LoggedUserCategory"].ToString() != "System Admin") {
+<script type="text/javascript">
+document.onkeydown = function(e) {
+	if(e.keyCode == 123) {return false;}
+	if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {return false;}
+	if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {return false;}
+	if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {return false;}
+}
+</script>
+}
+<script type="text/javascript" src="~/widgets/jgrowl-notifications/jgrowl.js"></script>
+<script type="text/javascript" src="~/widgets/jgrowl-notifications/jgrowl-demo.js"></script>
+
+@if (PHPFileName != "login.php" && PHPFileName != "forgot-password.php" && PHPFileName != "register.php") {
+<script type="text/javascript" src="~/js-core/jqueryt.min.js"></script>
+}
+
+<script>window.addEventListener("contextmenu", function(e){e.stopPropagation()}, true);</script>
+@* //db->mysqlclose(); *@
+<script type="text/javascript">
+
+	var PDATES_REGEX = /(\d{2}\/\d{2}\/\d{4}) to (\d{2}\/\d{2}\/\d{4})/;
+	
+	function given_date(range){
+      var dates = range.val().match(PDATES_REGEX);
+      if(!dates || 3 !== dates.length){
+        range.val('');
+        swal('Date Error','Please select date!', 'error');
+        return false;
+      }
+      return true;
+    }
+
+
+    function single_month(range){
+      var dates = range.val().match(PDATES_REGEX);
+      if(dates && 3 === dates.length && dates[1].substr(-7) !== dates[2].substr(-7)){
+        range.val('');
+        swal('Date Range Error','Please select dates from same month!', 'error');
+        return false;
+      }
+      return true;
+    }
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
+function escapeCSV (term) {
+  if (term.replaceAll)  {
+    term = term.replaceAll('\n','\\n');
+  }
+  if (term.match && term.match(/,|"/))  {
+    return `"${term.replaceAll('"','""')}"`;
+  }
+  return term;
+}
+
+function show_wip(msg){
+  if(!msg){
+    msg = 'Please wait for a while';
+  }
+  swal({showConfirmButton: false, 'title': 'Processing', 'text': msg});
+}
+
+function show_error(err){
+  if(!err){
+    err = 'Something went wrong!';
+  }
+  swal('Error', err, 'error');
+}
+
+function ask_del(func){
+  swal({
+    title: 'Are you sure?',
+    text: 'You will not be able to recover this details!',
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'No, cancel it',
+    closeOnConfirm: false,
+    closeOnCancel: true
+  }, function (choice) {
+    if(!choice) return;
+    func();
+  });
+}
+$(document).ajaxError(show_error);
+
+function show_success(err){
+  if(!err){
+    err = 'Success!';
+  }
+  swal('Success', err, 'success');
+}
+
+function show_info(err){
+  if(!err){
+    err = 'Info!';
+  }
+  swal('Info', err, 'info');
+}
+</script>
+<style>
+.bootstrap-timepicker-widget {text-align:center;}
+</style>

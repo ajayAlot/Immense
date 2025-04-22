@@ -1,0 +1,264 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var loggedUser = HttpContextAccessor.HttpContext.Session.GetObject<UserSession>("LoggedUser");
+    var loggedByUser = HttpContextAccessor.HttpContext.Session.GetObject<UserSession>("LoggedByUser");
+    var isSysAdmin = loggedUser?.Category == "System Admin";
+}
+
+<div id="page-header" class="@loggedUser.ThemeHeaderStyle font-inverse">
+    <div id="mobile-navigation">
+        <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar">
+            <span></span>
+        </button>
+        <a href="/" class="logo-content-small" title="@loggedUser.CompanyName"></a>
+    </div>
+    
+    <div id="header-logo" class="@(loggedUser.ThemeFixedSidebar ? loggedUser.ThemeHeaderStyle + " font-inverse" : "")">
+        <a href="/" class="logo-content-big tooltip-button" data-placement="bottom" title="@loggedUser.CompanyName">
+            <span class="logo-icon">@loggedUser.CompanyName</span>
+        </a>
+        <a href="/" class="logo-content-small tooltip-button" data-placement="bottom" title="@loggedUser.CompanyName">
+            <span class="logo-icon">@loggedUser.CompanyName</span>
+        </a>
+        <a id="close-sidebar" href="#" title="Close sidebar">
+            <i class="glyph-icon icon-angle-left"></i>
+        </a>
+    </div>
+    
+    @if (!isSysAdmin)
+    {
+        <div id="header-nav-left">
+            <div class="user-account-btn dropdown">
+                <a href="#" title="Support" class="user-profile clearfix tooltip-button" 
+                   data-toggle="dropdown" data-placement="right">
+                    <img width="28" src="~/upload/images/cust-support.png" alt="Support">
+                    <span>For Support</span>
+                    <i class="glyph-icon icon-angle-down"></i>
+                </a>
+                <div class="dropdown-menu float-left">
+                    <div class="box-sm">
+                        <ul class="reset-ul mrg5B">
+                            <li>
+                                <a href="/profile">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    Mobile Number: @loggedUser.SupportMobile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/profile">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    Email ID: @loggedUser.SupportEmail
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+    @if (loggedByUser != null)
+    {
+        var loginToUser = loggedByUser.Category switch
+        {
+            "System Admin" => "SystemAdmin",
+            "Reseller" => "Reseller",
+            "Admin" => "Admin",
+            _ => "Customer"
+        };
+        
+        <div id="header-nav-left">
+            <div class="user-account-btn dropdown">
+                <a href="#" title="Logged to Account: @loggedUser.Username" 
+                   class="user-profile clearfix tooltip-button" data-toggle="dropdown" data-placement="right">
+                    <span>Logged to Account: @loggedUser.Username</span>
+                    <i class="glyph-icon icon-angle-down"></i>
+                </a>
+                <div class="dropdown-menu float-left">
+                    <div class="box-sm">
+                        <ul class="reset-ul mrg5B">
+                            <li>
+                                <a href="javascript:void();">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    Logged to Account: @loggedUser.Username
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void();">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    Logged by Account: @loggedByUser.Username
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="pad5A button-pane button-pane-alt text-center">
+                            <a href="/account/login-to?mode=@loginToUser" 
+                               class="btn display-block font-normal btn-danger">
+                                <i class="glyph-icon icon-power-off"></i>  
+                                Back to Login with @loggedByUser.Username
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div id="header-nav-right">
+        @if (loggedUser.CategoryId < (int)UserCategory.Customer)
+        {
+            <a href="#" class="hdr-btn sb-toggle-left tooltip-button" id="chatbox-btn" 
+               title="Online Users" data-placement="left">
+                <i class="glyph-icon icon-linecons-user"></i>
+            </a>
+        }
+        
+        <div class="dropdown" id="notifications-btn">
+            <a data-toggle="dropdown" href="#" title="">
+                <span class="small-badge bg-yellow"></span>
+                <i class="glyph-icon icon-linecons-megaphone"></i>
+            </a>
+            <div class="dropdown-menu box-md float-right">
+                <div class="popover-title display-block clearfix pad10A">
+                    Notifications
+                    <span class="float-right">
+                        <a class="font-blue" href="/users/notice">View All</a>
+                    </span>
+                </div>
+                <div class="scrollable-content scrollable-slim-box">
+                    <ul class="no-border notifications-box">
+                        @foreach (var notice in await NoticeService.GetActiveNoticesAsync(loggedUser.Id))
+                        {
+                            <li>
+                                <span class="bg-danger icon-notification glyph-icon icon-bullhorn"></span>
+                                <span class="notification-text font-blue">
+                                    <a class="font-blue" href="#" 
+                                       onclick="NoticeDetails('@notice.Id');">
+                                        @notice.Subject
+                                    </a>
+                                </span>
+                                <div class="notification-time">
+                                    @notice.CreatedDate
+                                    <span class="glyph-icon icon-clock-o"></span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dropdown" id="progress-btn">
+            <a data-toggle="dropdown" href="#" data-placement="bottom" 
+               class="tooltip-button" title="Route Balance & Validity">
+                <span class="small-badge bg-azure"></span>
+                <i class="glyph-icon icon-linecons-mobile"></i>
+            </a>
+            <div class="dropdown-menu pad0A box-sm float-right" id="progress-dropdown">
+                <div class="popover-title display-block clearfix pad10A">Route Balance & Validity</div>
+                <div class="scrollable-content scrollable-slim-box" style="height:auto!important;">
+                    <ul class="no-border notifications-box">
+                        @foreach (var route in await RouteService.GetUserRoutesAsync(loggedUser.Id))
+                        {
+                            var balance = await UserService.GetSmsBalanceAsync(loggedUser.Id, route.Id);
+                            var validity = await TransactionService.GetValidityDateAsync(loggedUser.Id, route.Id);
+                            
+                            <li>
+                                <span class="bg-danger icon-notification glyph-icon icon-mobile"></span>
+                                <span class="notification-text font-blue">
+                                    @route.Name : @balance.ToString("N0")
+                                </span>
+                                @if (validity.HasValue)
+                                {
+                                    <div class="notification-time">
+                                        @validity.Value.ToShortDateString()
+                                        <span class="glyph-icon icon-clock-o"></span>
+                                    </div>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dropdown" id="cloud-btn">
+            <a href="#" data-placement="bottom" class="tooltip-button sb-toggle-right" 
+               title="Statistics">
+                <i class="glyph-icon icon-linecons-cloud"></i>
+            </a>
+        </div>
+        
+        <div class="dropdown" id="dashnav-btn">
+            <a href="#" data-toggle="dropdown" data-placement="bottom" 
+               class="popover-button-header tooltip-button" title="Quick Menu">
+                <i class="glyph-icon icon-linecons-cog"></i>
+            </a>
+            <div class="dropdown-menu float-right">
+                <div class="box-sm">
+                    <div class="pad5T pad5B pad10L pad10R dashboard-buttons clearfix">
+                        <a href="/" class="btn vertical-button remove-border btn-info" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-dashboard opacity-80 font-size-20"></i>
+                            </span>
+                            Dashboard
+                        </a>
+                        <a href="/compose" class="btn vertical-button remove-border btn-danger" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-linecons-mail opacity-80 font-size-20"></i>
+                            </span>
+                            Compose
+                        </a>
+                        <a href="/compose/dynamic" class="btn vertical-button remove-border btn-info" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-mobile-phone opacity-80 font-size-20"></i>
+                            </span>
+                            Dynamic
+                        </a>
+                        <a href="/sender-id" class="btn vertical-button remove-border btn-warning" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-linecons-lightbulb opacity-80 font-size-20"></i>
+                            </span>
+                            Utility
+                        </a>
+                        <a href="/address-book" class="btn vertical-button remove-border btn-purple" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-linecons-note opacity-80 font-size-20"></i>
+                            </span>
+                            Address Book
+                        </a>
+                        <a href="/reports/advance" class="btn vertical-button remove-border btn-primary" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-file-text-o opacity-80 font-size-20"></i>
+                            </span>
+                            Adv Report
+                        </a>
+                        <a href="/profile" class="btn vertical-button remove-border btn-azure" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-linecons-user opacity-80 font-size-20"></i>
+                            </span>
+                            Profile
+                        </a>
+                        <a href="/support/ticket" class="btn vertical-button remove-border btn-warning" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-file opacity-80 font-size-20"></i>
+                            </span>
+                            Support
+                        </a>
+                        <a href="/help" class="btn vertical-button remove-border btn-yellow" title="">
+                            <span class="glyph-icon icon-separator-vertical pad0A medium">
+                                <i class="glyph-icon icon-laptop opacity-80 font-size-20"></i>
+                            </span>
+                            Help
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <a class="header-btn tooltip-button" id="logout-btn" href="javascript:void();" 
+           title="Logout" data-placement="bottom" onclick="Logout();">
+            <i class="glyph-icon icon-power-off"></i>
+        </a>
+    </div>
+</div>

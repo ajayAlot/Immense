@@ -1,0 +1,251 @@
+﻿@using processJobAndSmsApi.Models
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var user = HttpContextAccessor.HttpContext.Session.GetObject<UserSession>("LoggedUser");
+    var isSysAdmin = user?.Category == "System Admin";
+    var isReseller = user?.Category == "Reseller";
+    var isAdmin = user?.Category == "Admin";
+    var isCustomer = user?.Category == "Customer";
+}
+
+<div id="page-sidebar" class="@user.ThemeSidebarStyle">
+    <div class="scroll-sidebar">
+        <ul id="sidebar-menu">
+            <li class="header"><span>Overview</span></li>
+            <li><a href="/" title="Dashboard"><i class="glyph-icon icon-linecons-tv"></i><span>Dashboard</span></a></li>
+
+            @if (isSysAdmin)
+            {
+                <li><a href="/statistics/dashboard" title="Statistics Dashboard"><i class="glyph-icon icon-linecons-beaker"></i><span>Statistics</span></a></li>
+                <li>
+                    <a href="#" title="View Statistics"><i class="glyph-icon icon-linecons-diamond"></i><span>View Statistics</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/reports/advance" title="View Advance Report"><span>View Advance Report</span></a></li>
+                            <li><a href="/reports/sender-id" title="View Sender ID Report"><span>View Sender ID Report</span></a></li>
+                            <li><a href="/reports/users-sender" title="View Sender ID Report"><span>View Users Sender Report</span></a></li>
+                            <li><a href="/reports/gateway" title="View Gateway Report"><span>View Gateway Report</span></a></li>
+                            <li><a href="/reports/route" title="View Route Report"><span>View Route Report</span></a></li>
+                            <li><a href="/reports/routing" title="View Routing"><span>View Routing</span></a></li>
+                            <li><a href="/reports/users-summary" title="View All User Summary"><span>View All User Summary</span></a></li>
+                            <li><a href="/users/all" title="View All Users"><span>View All Users</span></a></li>
+                            <li><a href="/users/tree" title="View All Users"><span>Users Tree</span></a></li>
+                            <li><a href="/reports/dlr-stats" title="View DLR Stats"><span>View DLR Stats</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+
+            <li><a href="javascript:void();" title="Logout" onclick="Logout();"><i class="glyph-icon icon-power-off"></i><span>Logout</span></a></li>
+
+            <li class="divider"></li>
+            <li class="header"><span>User Panel</span></li>
+
+            @if (user.ComposeEnabled)
+            {
+                <li><a href="/compose" title="Compose"><i class="glyph-icon icon-linecons-mail"></i><span>Compose</span></a></li>
+            }
+
+            @if (user.DynamicSmsEnabled)
+            {
+                <li><a href="/compose/dynamic" title="Dynamic SMS"><i class="glyph-icon icon-linecons-comment"></i><span>Dynamic SMS</span></a></li>
+            }
+
+            @if (user.SmartSmsEnabled)
+            {
+                <li><a href="/compose/smart" title="Smart SMS"><i class="glyph-icon icon-linecons-attach"></i><span>Smart SMS</span></a></li>
+            }
+
+            @if (!user.ReportBlocked)
+            {
+                <li><a href="/reports/today" title="Reports"><i class="glyph-icon icon-linecons-diamond"></i><span>Reports</span></a></li>
+                <li><a href="/reports/summary" title="Summary"><i class="glyph-icon icon-linecons-doc"></i><span>Summary</span></a></li>
+            }
+
+            @if (user.ApiAccessEnabled)
+            {
+                <li><a href="/api/documentation" title="API Documentation"><i class="glyph-icon icon-linecons-cloud"></i><span>API Documentation</span></a></li>
+            }
+
+            <li><a href="/profile" title="Utility"><i class="glyph-icon icon-linecons-lightbulb"></i><span>Utility</span></a></li>
+
+            @if (isSysAdmin)
+            {
+                <li><a href="/misscall-alert" title="Miss Call Alert"><i class="glyph-icon icon-linecons-megaphone"></i><span>Miss Call Alert</span></a></li>
+                <li><a href="/shortcode-alert" title="Shortcode Alert"><i class="glyph-icon icon-linecons-megaphone"></i><span>Shortcode Alert</span></a></li>
+            }
+
+            <li><a href="/dlt" title="DLT"><i class="glyph-icon icon-tasks"></i><span>DLT Management</span></a></li>
+            <li><a href="/groups" title="Group"><i class="glyph-icon icon-linecons-note"></i><span>Groups</span></a></li>
+
+            <li>
+                <a href="#" title="Support Tickets"><i class="glyph-icon icon-linecons-mail"></i><span>Support Tickets</span><span class="bs-badge badge-danger" id="tickets-count"></span></a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a href="/support/tickets" title="Support Ticket"><span>Support Ticket</span> <span class="bs-badge badge-danger float-right-margin-7" id="user-tickets"></span></a></li>
+                        <li><a href="/support/tickets/new" title="Add New Support Ticket"><span>Add Support Ticket</span></a></li>
+                        @if (!isCustomer)
+                        {
+                            <li><a href="/support/tickets/users" title="Support Ticket"><span>Users Support Ticket</span> <span class="bs-badge badge-info float-right-margin-7" id="mod-user-tickets"></span></a></li>
+                        }
+                    </ul>
+                </div>
+            </li>
+
+            @if (isSysAdmin || isReseller || isAdmin)
+            {
+                <li>
+                    <a href="#" title="User Management"><i class="glyph-icon icon-linecons-user"></i><span>User Management</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/users" title="Manage Users"><span>Manage Users</span></a></li>
+                            <li><a href="/templates/approve" title="Approve Template"><span>Approve Template</span> <span class="bs-badge badge-info custom-float-right" id="template-count"></span></a></li>
+                            <li><a href="/sender-ids/approve" title="Approve Sender ID"><span>Approve Sender ID</span> <span class="bs-badge badge-info custom-float-right" id="sender-count"></span></a></li>
+                            <li><a href="/branding" title="Branding"><span>Branding</span></a></li>
+                            <li><a href="/users/summary" title="Users Summary"><span>Users Summary</span></a></li>
+                            <li><a href="/users/route-summary" title="Users Route Summary"><span>Users Route Summary</span></a></li>
+
+                            @if (user.NumberManagementEnabled)
+                            {
+                                <li><a href="/users/number-management" title="Mobile Number Management"><span>Users Mobile Management</span></a></li>
+                            }
+
+                            <li><a href="/broadcast" title="Broadcast SMS & Email"><span>Broadcast Message</span></a></li>
+                            <li><a href="/tree/summary" title="Tree Summary"><span>Tree Summary</span></a></li>
+
+                            @if (isSysAdmin || isAdmin)
+                            {
+                                <li><a href="/admin/summary" title="Admin Summary"><span>Admin Summary</span><span class="pull-right bs-label badge-danger Blinking">NEW</span></a></li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+
+                @if (isReseller || isAdmin)
+                {
+                    <li>
+                        <a href="#" title="Live Status"><i class="glyph-icon icon-linecons-megaphone"></i><span>Live Status</span><span class="bs-label badge-yellow">NEW</span></a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li><a href="/live/users-jobs" title="Users Live Job"><span>Users Live Job</span></a></li>
+                                <li><a href="/reports/users-jobs" title="Users Job Report"><span>Users Job Report</span></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+            }
+
+            @if (isSysAdmin)
+            {
+                <li class="divider"></li>
+                <li class="header"><span>Administrator</span></li>
+
+                <li>
+                    <a href="#" title="Route Management"><i class="glyph-icon icon-linecons-fire"></i><span>Route Management</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/gateways/families" title="Gateway Family"><span>Gateway Family</span></a></li>
+                            <li><a href="/gateways/smpp" title="SMPP (SMSC ID)"><span>SMPP (SMSC ID)</span></a></li>
+                            <li><a href="/routes/types" title="Route Type"><span>Route Type</span></a></li>
+                            <li><a href="/routes/plans" title="Routing Plan"><span>Routing Plan</span></a></li>
+                            <li><a href="/routes/sender" title="Sender Routing"><span>Sender Routing</span></a></li>
+                            <li><a href="/routes/dlt" title="DLT Routing"><span>DLT Routing</span></a></li>
+                            <li><a href="/smpp/error-codes" title="SMPP Error Code"><span>SMPP Error Code</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#" title="Job Status"><i class="glyph-icon icon-linecons-megaphone"></i><span>Job Status</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/jobs/live" title="Live Job Report"><span>Live Job</span></a></li>
+                            <li><a href="/jobs/summary" title="Live Summary"><span>Job Summary</span></a></li>
+                            <li><a href="/jobs/reports" title="Job Report"><span>Job Report</span></a></li>
+                            <li><a href="/jobs/smart-sms"><span>Smart SMS Job (All)</span></a></li>
+                            <li><a href="/jobs/refund-summary" title="Refund Summary"><span>Refund Summary</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#" title="Support Tickets">
+                        <i class="glyph-icon icon-linecons-mail"></i>
+                        <span>Support Tickets</span><span class="bs-badge badge-danger" id="ticket-count-2"></span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/support/departments" title="Manage Department"><span>Manage Department</span></a></li>
+                            <li><a href="/support/inbox" title="Support Tickets"><span>Active Support Tickets</span> <span class="bs-badge badge-danger float-right-margin-7" id="ticket-count-3"></span></a></li>
+                            <li><a href="/support/reseller" title="Reseller Support Tickets"><span>Reseller Support Tickets</span> <span class="bs-badge badge-info float-right-margin-7" id="ticket-count-4"></span></a></li>
+                            <li><a href="/support/admin" title="Admin Support Tickets"><span>Admin Support Tickets</span> <span class="bs-badge badge-info float-right-margin-7" id="ticket-count-5"></span></a></li>
+                            <li><a href="/support/all" title="All Support Tickets"><span>All Support Tickets</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#" title="Manage Spam">
+                        <i class="glyph-icon icon-linecons-lock"></i>
+                        <span>Spam/Spoofing</span><span class="bs-badge badge-danger" id="spam-count"></span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/spam/ip-management" title="IP Address"><span>IP Management</span></a></li>
+                            <li><a href="/spam/sender-id" title="Sender ID Management"><span>Sender ID Management</span></a></li>
+                            <li><a href="/spam/control" title="Spam Control"><span>Spam Control Keywords</span></a></li>
+                            <li><a href="/spam/release" title="Spam Drop & Release"><span>Spam Drop & Release</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#" title="System Setting"><i class="glyph-icon icon-linecons-cog"></i><span>System Setting</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/system/announcement" title="Announcement"><span>Announcement</span></a></li>
+                            <li><a href="/system/cache" title="Clear Cache"><span>Clear the Cache</span></a></li>
+                            <li><a href="/system/export" title="Export Database"><span>Export Database</span></a></li>
+                            <li><a href="/system/notices" title="Manage Notice"><span>Manage Notice</span></a></li>
+                            <li><a href="/system/countries" title="Manage Country"><span>Manage Country</span></a></li>
+                            <li><a href="/system/regions" title="Manage Region"><span>Manage Region/State</span></a></li>
+                            <li><a href="/system/operators" title="Mobile Operator"><span>Mobile Operator</span></a></li>
+                            <li><a href="/system/mobile-series" title="Mobile Series"><span>Mobile Series</span></a></li>
+                            <li><a href="/system/industries" title="Industry"><span>Industry</span></a></li>
+                            <li><a href="/system/cutoff" title="Cutoff Status"><span>Cutoff Status</span></a></li>
+                            <li><a href="/system/faq" title="FAQ"><span>FAQ</span></a></li>
+                            <li><a href="/system/smtp" title="SMTP Details"><span>SMTP Details</span></a></li>
+                            <li><a href="/system/cms" title="Compose CMS Page"><span>Compose CMS Page</span></a></li>
+                            <li><a href="/system/dnd" title="DND Numbers"><span>DND Numbers</span></a></li>
+                            <li><a href="/system/gst" title="GST Type"><span>GST Type</span></a></li>
+                            <li><a href="/system/application-status" title="Application Status"><span>Application Status</span></a></li>
+                            <li><a href="/system/smart-url">Smart URL Domain</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#" title="Server Admin"><i class="glyph-icon icon-database"></i><span>Server Admin</span><span class="bs-label badge-yellow">NEW</span></a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li><a href="/server/box-status">Box Status</a></li>
+                            <li><a href="/server/db-status">Database Status</a></li>
+                            <li><a href="/server/status">Server Status</a></li>
+                            <li><a href="/server/net-speed">Net Speed</a></li>
+                            <li><a href="/server/gateway-queue">Gateway Queue</a></li>
+                            <li><a href="/server/gateway-status">Gateway Status</a></li>
+                            <li><a href="/server/test-tcp">Test TCP</a></li>
+                            <li><a href="/server/refresh-tree">Refresh Tree</a></li>
+                            <li><a href="/server/kannel-logs">Kannel (SMS &amp; DLR) Logs</a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+
+            <li class="divider"></li>
+            <li class="top-margin20">
+                You will be auto logged out in <span id="SecondsUntilExpire"></span> seconds of inactivity.
+            </li>
+        </ul>
+    </div>
+</div>
