@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient; // Use this for MySQL
 // using System.Data.SqlClient; ← Remove this if using MySQL
 using System.Security.Cryptography;
 using System.Text;
+using processJobAndSmsApi.Models;
 
 
 namespace processJobAndSmsApi.Services
@@ -459,6 +460,27 @@ namespace processJobAndSmsApi.Services
                 }
                 return sb.ToString();
             }
+        }
+
+
+        public Users GetLoggedUserData()
+        {
+            var username = GetLoggedUsername();
+            if(username == null)
+            {
+                return null;
+            }
+            try
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Username == username);
+                return user;
+            }
+            catch (Exception ex) {
+                return null;
+            }
+            
+            
+            
         }
     }
 }
