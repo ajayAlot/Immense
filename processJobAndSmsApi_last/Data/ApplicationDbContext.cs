@@ -19,6 +19,7 @@ namespace processJobAndSmsApi.Data
         public DbSet<UsersSMS> UsersSMS { get; set; }
         public DbSet<UsersSmsSmartUrl> UsersSmsSmartUrls { get; set; }
         public DbSet<SmartLinkHit> SmartLinkHits { get; set; }
+        public DbSet<UsersCategory> UsersCategory { get; set; }
 
 
 
