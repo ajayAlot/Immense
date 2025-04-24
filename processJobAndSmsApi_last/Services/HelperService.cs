@@ -1,8 +1,14 @@
 using System;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql;
+using processJobAndSmsApi.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient; // Use this for MySQL
 // using System.Data.SqlClient; ← Remove this if using MySQL
+using System.Security.Cryptography;
+using System.Text;
+
 
 namespace processJobAndSmsApi.Services
 {
@@ -10,11 +16,13 @@ namespace processJobAndSmsApi.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _context;
 
-        public HelperService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
+        public HelperService(IHttpContextAccessor httpContextAccessor, IConfiguration configuration, ApplicationDbContext context)
         {
             _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
+            _context = context;
         }
 
         public int GetLoggedUserId()
@@ -328,6 +336,129 @@ namespace processJobAndSmsApi.Services
             }
         }
 
+        public string PasswordGenerate()
+        {
+            string _allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789!@#$%";
+            Random randNum = new Random();
+            char[] chars = new char[8];
+            for (int i = 0; i < 8; i++)
+            {
+                chars[i] = _allowedChars[randNum.Next(0, _allowedChars.Length)];
+            }
+            return new string(chars);
+        }
 
+        public string GetLoggedUsername()
+        {
+            var username = _httpContextAccessor.HttpContext.Session.GetString("username");
+            if (username == null)
+            {
+                return null;
+            }
+            return username;
+        }
+
+        public string GetUsersCategoryIDByTitle(string title)
+        {
+            var category = _context.UsersCategory.FirstOrDefaultAsync(c => c.Type == title);
+            if (category != null)
+            {
+                return category.Id.ToString();
+            }
+            return null;
+        }
+
+        public string GenerateApiKey(string username)
+        {
+            // Combine username, current microtime, and a random number
+            string input = username + DateTime.Now.Ticks + new Random().Next(1000, 9999);
+
+            // Create MD5 hash
+            using (var md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+                // Convert hash to uppercase hex string
+                string hashString = BitConverter.ToString(hash).Replace("-", "").ToUpper();
+
+                // Take first 10 characters
+                string shortHash = hashString.Substring(0, 10);
+
+                // Split into chunks of 5 and join with dash
+                string result = string.Join("-", SplitInParts(shortHash, 5));
+                return result;
+            }
+        }
+
+        private static string[] SplitInParts(string s, int partLength)
+        {
+            int partCount = (s.Length + partLength - 1) / partLength;
+            string[] parts = new string[partCount];
+            for (int i = 0; i < partCount; i++)
+            {
+                int startIndex = i * partLength;
+                parts[i] = s.Substring(startIndex, Math.Min(partLength, s.Length - startIndex));
+            }
+            return parts;
+        }
+
+        public string DateToJulian(DateTime date)
+        {
+            int year = date.Year;
+            int month = date.Month;
+            int day = date.Day;
+
+            if (month <= 2)
+            {
+                year--;
+                month += 12;
+            }
+
+            int A = year / 100;
+            int B = 2 - A + A / 4;
+
+            int julianDay = (int)(365.25 * (year + 4716))
+                          + (int)(30.6001 * (month + 1))
+                          + day + B - 1524;
+
+            return julianDay.ToString();
+        }
+
+
+        public string GetRandomManagerIDByUsersID(string username)
+        {
+            using(var connection =new MySqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+                var query = "SELECT id from manager where username = @username order by rand() LIMIT 0, 1";
+
+                var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@username", username);
+                var result = command.ExecuteScalar();
+                if(result !=null && result != DBNull.Value)
+                {
+                    return result.ToString();
+                }
+                
+
+            }
+            return null;
+        }
+
+        public string ToMD5(string input)
+        {
+            using (var md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to a hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                foreach (var b in hashBytes)
+                {
+                    sb.Append(b.ToString("x2")); // Format as hexadecimal
+                }
+                return sb.ToString();
+            }
+        }
     }
 }
