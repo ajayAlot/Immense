@@ -1,0 +1,493 @@
+﻿@model processJobAndSmsApi.Models.UserRegister
+@{
+    Layout = null;
+
+}
+
+@* Add required CSS libraries *@
+
+<style>
+
+
+    /* Background image styling */
+    .login-img {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    /* Main container */
+    .center-vertical {
+        width: 100%;
+    }
+
+    /* Container modifications */
+    .container {
+        width: 100%;
+        max-width: 360px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Logo container */
+    .col-md-3.center-margin {
+        width: 100%;
+        max-width: 360px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Logo image */
+    .mrg10B.center-margin.display-block.pad20T {
+        width: 150px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    /* Main form container */
+    #RegisterBox {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+        padding: 15px;
+        animation: slideDown 0.5s ease-out;
+    }
+
+    /* Animation for form drop */
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-100px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Header section */
+    .content-box-header {
+        background: white;
+    }
+
+    .content-box-header-alt {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header-wrapper {
+        flex: 1;
+    }
+
+        .header-wrapper h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .header-wrapper small {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+    /* Form content */
+    .content-box-wrapper {
+        padding: 0px;
+    }
+
+    /* Input groups */
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    .input-group-append {
+        position: absolute;
+        right: 12px;
+        color: #666;
+    }
+
+    /* Checkbox styling */
+    .checkbox-info {
+        margin: 15px 0;
+    }
+
+    .custom-checkbox {
+        margin-right: 8px;
+    }
+
+    /* Button styling */
+    .btn-success {
+        background-color: #00bfa5;
+        border: none;
+        padding: 10px;
+        border-radius: 6px;
+        color: white;
+        font-weight: 500;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+        .btn-success:hover {
+            background-color: #00a895;
+        }
+
+    .btn-primary {
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+
+    /* Login link */
+    .header-buttons .btn {
+        padding: 8px 20px;
+        border-radius: 5px;
+        background-color: #2196f3;
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    /* Validation messages */
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    /* Make form container narrower */
+    .col-md-3.center-margin {
+        max-width: 400px !important;
+    }
+
+    /* Loading spinner */
+    #loading {
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .spinner > div {
+        background-color: #00bfa5;
+    }
+
+    /* Media queries for responsiveness */
+    @@media (max-width: 768px) {
+        .center-vertical {
+            padding: 10px;
+        }
+
+        #RegisterBox {
+            max-width: 340px;
+            margin: 10px;
+        }
+    }
+
+    /* Remove container width constraint */
+    .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+    /* Add this to ensure proper form layout */
+    #RegisterForm {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Ensure input groups are properly styled */
+    .input-group {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .input-group-append {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Fix button alignment */
+    .btn-success.btn-block {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+</style>
+
+<div id="loading">
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<img src="~/images/background-sms.jpg"
+     class="login-img wow fadeIn" alt="@ViewBag.LoggedUserCompanyname">
+
+<div class="center-vertical">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3 center-margin" style="width: 100%;">
+                <img class="mrg10B center-margin display-block pad20T"
+                     src="~/images/company-logo.png"
+                     alt="@ViewBag.LoggedUserCompanyname">
+
+                <div class="alert alert-danger" id="SystemMessage" style="display:none;"></div>
+
+                <!-- Registration Form -->
+                <form id="RegisterForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <div id="RegisterBox" class="content-box wow bounceInDown">
+                        <h3 class="content-box-header content-box-header-alt bg-default">
+                            <span class="icon-separator">
+                                <i class="glyph-icon icon-cog"></i>
+                            </span>
+                            <span class="header-wrapper">
+                                Members area<br />
+                                <small>Registration</small>
+                            </span>
+                            <span class="header-buttons">
+                                <a href="@Url.Action("signin", "AuthService")" class="btn btn-sm btn-primary">Login</a>
+                            </span>
+                        </h3>
+                        <div class="content-box-wrapper">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="Username" asp-for="Username" class="form-control" placeholder="Username" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="Fullname" asp-for="Fullname" class="form-control" placeholder="Full Name" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Fullname" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="Companyname" asp-for="Companyname" class="form-control" placeholder="Company Name" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-building"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Companyname" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="Email" asp-for="Email" class="form-control" placeholder="Email Address" type="email" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-at"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="Mobile" asp-for="Mobile" class="form-control" placeholder="Mobile Number"
+                                           maxlength="10" minlength="10" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-mobile"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">Password will be sent to this number.</small>
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="PostCode" asp-for="PostCode" class="form-control" placeholder="Post Code"
+                                           maxlength="6" minlength="6" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-map-marker"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="PostCode" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="checkbox checkbox-info">
+                                    <label>
+                                        <input id="AcceptTerms" asp-for="AcceptTerms" type="checkbox" class="custom-checkbox" />
+                                        I accept terms and conditions
+                                    </label>
+                                </div>
+                                <span asp-validation-for="AcceptTerms" class="text-danger"></span>
+                            </div>
+
+                            <button id="submit" type="submit" class="btn btn-success btn-block" >Register</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- OTP Form -->
+                <form id="RegisterFormOTP" style="display:none;" method="post"
+                      asp-controller="Authentication" asp-action="VerifyOTP">
+                    @Html.AntiForgeryToken()
+                    <div id="RegisterBoxOTP" class="content-box wow bounceInDown">
+                        <h3 class="content-box-header content-box-header-alt bg-default">
+                            <span class="icon-separator">
+                                <i class="glyph-icon icon-info-circle"></i>
+                            </span>
+                            <span class="header-wrapper">
+                                Members area
+                                <small>Please enter valid OTP to authenticate.</small>
+                            </span>
+                        </h3>
+                        <div class="content-box-wrapper">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" id="verification_code" name="OTP"
+                                           class="form-control" placeholder="OTP" required />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-blue">
+                                            <i class="glyph-icon icon-mobile"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/assets/widgets/wow/wow.js"></script>
+    <script type="text/javascript">wow = new WOW({ animateClass: 'animated', offset: 100 }); wow.init();</script>
+    <script>
+        $(document).ready(function () {
+            // Initialize WOW.js
+            new WOW({
+                animateClass: 'animated',
+                offset: 10,
+                mobile: true,
+                live: false
+            }).init();
+
+            // Prevent right-click
+            $(document).on('contextmenu', function () {
+                return false;
+            });
+
+            // Show loading spinner
+            $(document).on('submit', 'form', function () {
+                $('#loading').fadeIn();
+            });
+
+            // Handle mobile number input
+            $('#Mobile').on('keypress', function (e) {
+                return e.charCode >= 48 && e.charCode <= 57;
+            });
+
+            // Handle PostCode input
+            $('#PostCode').on('keypress', function (e) {
+                return e.charCode >= 48 && e.charCode <= 57;
+            });
+        });
+    </script>
+            
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function (e) {
+                e.preventDefault();
+
+                var model = {
+                    Username: $("#Username").val(),
+                    Fullname: $("#Fullname").val(),
+                    Companyname:$("#Companyname").val(),
+                    Email:$("#Email").val(),
+                    Mobile:$("#Mobile").val(),
+                    PostCode:$("#PostCode").val(),
+                    AcceptTerms:$("#AcceptTerms").is(":checked")
+
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Account/Register", // Adjust to your controller/action
+                    data: JSON.stringify(model),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert(response.message);
+                        if (response.statusCode) {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert(response.message);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
